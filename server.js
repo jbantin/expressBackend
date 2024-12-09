@@ -3,12 +3,12 @@ import Gemini from "./gemini.js";
 import cors from "cors";
 
 const app = express();
-const encoding = "utf8";
+// const encoding = "utf8";
 const port = 2423;
 
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
