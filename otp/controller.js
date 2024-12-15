@@ -59,4 +59,11 @@ const sendOTP = async ({ email, subject, message, duration = 1 }) => {
     throw error;
   }
 };
-export { sendOTP, verifyOTP };
+const deleteOTP = async (email) => {
+  try {
+    await OTP.deleteOne({ email });
+  } catch (error) {
+    throw error;
+  }
+};
+export { sendOTP, verifyOTP, deleteOTP };

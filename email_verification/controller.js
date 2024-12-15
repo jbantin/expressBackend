@@ -1,6 +1,19 @@
 import { User } from "./../database/model.js";
-import { sendOTP } from "../otp/controller.js";
+import { sendOTP, verifyOTP, deleteOTP } from "../otp/controller.js";
 
+const verifyUserEmail = async ({ email, otp }) => {
+  try {
+    const validOTP = await verifyOTP({ email, otp });
+    if (!validOTP) {
+      throw Error("Invalid code passed.Check your inbox.");
+    }
+    await User.updateOne({ email }, { verified: true });
+    await deleteOTP(email);
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 const sendVerificationOTPEmail = async (email) => {
   try {
     const existingUser = await User.findOne({ email });
@@ -22,4 +35,4 @@ const sendVerificationOTPEmail = async (email) => {
   }
 };
 
-export { sendVerificationOTPEmail };
+export { sendVerificationOTPEmail, verifyUserEmail };

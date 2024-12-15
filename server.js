@@ -6,6 +6,7 @@ import { createNewUser, authenticateUser } from "./database/controller.js";
 import { verifyToken } from "./middleware/auth.js";
 import OTPRoutes from "./otp/routes.js";
 import emailVerificationRoutes from "./email_verification/routes.js";
+import { sendVerificationOTPEmail } from "./email_verification/controller.js";
 const app = express();
 
 const port = 2423;
@@ -58,7 +59,7 @@ app.post("/sign_up", async (req, res) => {
       throw Error("Password is to short");
     }
     const msg = await createNewUser({ name, email, password });
-
+    await sendVerificationOTPEmail(email);
     res.status(200).json(msg);
   } catch (error) {
     res.status(400).send(error.message);
