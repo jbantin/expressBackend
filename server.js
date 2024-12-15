@@ -7,6 +7,7 @@ import { verifyToken } from "./middleware/auth.js";
 import OTPRoutes from "./otp/routes.js";
 import emailVerificationRoutes from "./email_verification/routes.js";
 import { sendVerificationOTPEmail } from "./email_verification/controller.js";
+import ForgotPasswordRoutes from "./forgot_password/routes.js";
 const app = express();
 
 const port = 2423;
@@ -24,6 +25,7 @@ app.post("/prompt", (req, res) => {
     res.send(response);
   });
 });
+app.use("/forgot_password", ForgotPasswordRoutes);
 app.use("/otp", OTPRoutes);
 app.use("/email_verification", emailVerificationRoutes);
 app.get("/private", verifyToken, (req, res) => {
