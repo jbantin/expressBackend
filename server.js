@@ -5,11 +5,11 @@ import "./database/db.js";
 import { createNewUser, authenticateUser } from "./database/controller.js";
 import { verifyToken } from "./middleware/auth.js";
 import OTPRoutes from "./otp/routes.js";
+import emailVerificationRoutes from "./email_verification/routes.js";
 const app = express();
-// const encoding = "utf8";
+
 const port = 2423;
 
-// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.get("/", (req, res) => {
@@ -24,6 +24,7 @@ app.post("/prompt", (req, res) => {
   });
 });
 app.use("/otp", OTPRoutes);
+app.use("/email_verification", emailVerificationRoutes);
 app.get("/private", verifyToken, (req, res) => {
   res
     .status(200)
@@ -44,10 +45,10 @@ app.post("/login", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
-app.post("/sign_in", async (req, res) => {
+app.post("/sign_up", async (req, res) => {
   try {
     let { name, email, password } = req.body;
-
+    console.log(name, email, password);
     if (!(name && email && password)) throw Error("Empty input fields!");
     else if (!/^[a-zA-z ]*$/.test(name)) {
       throw Error("Invalid name entered!");
