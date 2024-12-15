@@ -1,8 +1,33 @@
 import { OTP } from "./model.js";
 import { generateOTP } from "../util/generateOTP.js";
 import { sendEmail } from "../util/sendEmail.js";
-import { hashData } from "../util/hashData.js";
+import { hashData, verifyHashedData } from "../util/hashData.js";
 const { AUTH_EMAIL } = process.env;
+
+const verifyOTP = async ({ email, otp }) => {
+  try {
+    if (!(email && otp)) {
+      throw Error("Provide values for email,otp");
+    }
+    const matchedOTPRecord = await OTP.findOne({ email });
+    if (!matchedOTPRecord) {
+      throw Error("No otp records found.");
+    }
+
+    const { expiresAt } = matchedOTPRecord;
+
+    if (expiresAt < Date.now()) {
+      throw Error("otp expired.Request for a new one.");
+    }
+
+    const hashedOTP = matchedOTPRecord.otp;
+    const validOtp = await verifyHashedData(otp, hashedOTP);
+    return validOtp;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const sendOTP = async ({ email, subject, message, duration = 1 }) => {
   try {
     if (!(email && subject && message)) {
@@ -34,4 +59,4 @@ const sendOTP = async ({ email, subject, message, duration = 1 }) => {
     throw error;
   }
 };
-export { sendOTP };
+export { sendOTP, verifyOTP };
