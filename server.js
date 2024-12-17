@@ -25,9 +25,7 @@ app.post("/prompt", (req, res) => {
     res.send(response);
   });
 });
-app.use("/forgot_password", ForgotPasswordRoutes);
-app.use("/otp", OTPRoutes);
-app.use("/email_verification", emailVerificationRoutes);
+
 app.get("/private", verifyToken, (req, res) => {
   res
     .status(200)
@@ -66,6 +64,9 @@ app.post("/sign_up", async (req, res) => {
   } catch (error) {
     res.status(400).send(error.message);
   }
+  app.use("/forgot_password", ForgotPasswordRoutes);
+  app.use("/otp", OTPRoutes);
+  app.use("/email_verification", emailVerificationRoutes);
 });
 
 app.use("*", (_, res) => {
