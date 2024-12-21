@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 app.get("/greeting", (req, res) => {
   res.send("oi koile");
 });
-app.post("/prompt", (req, res) => {
+app.post("/prompt", verifyToken, (req, res) => {
   Gemini(req.body.prompt).then((response) => {
     res.send(response);
   });
@@ -31,7 +31,7 @@ app.get("/private", verifyToken, (req, res) => {
     .status(200)
     .send(`You are in the private area of ${req.currentUser.email}`);
 });
-app.post("/login", verifyToken, async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
     email = email.trim();
