@@ -31,7 +31,7 @@ app.get("/private", verifyToken, (req, res) => {
     .status(200)
     .send(`You are in the private area of ${req.currentUser.email}`);
 });
-app.post("/login", async (req, res) => {
+app.post("/login", verifyToken, async (req, res) => {
   try {
     let { email, password } = req.body;
     email = email.trim();
