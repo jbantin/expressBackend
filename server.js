@@ -17,9 +17,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
-app.use("/email_verification", (req, res) => {
-  res.send("<h1>huhu verify</h1>");
-});
+
 app.get("/greeting", (req, res) => {
   res.send("oi koile");
 });
@@ -48,6 +46,9 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     res.status(400).send(error.message);
   }
+});
+app.use("/email_verification", (req, res) => {
+  res.send("<h1>huhu verify</h1>");
 });
 app.post("/sign_up", async (req, res) => {
   try {
