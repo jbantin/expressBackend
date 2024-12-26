@@ -1,7 +1,9 @@
 import express from "express";
 import { sendVerificationOTPEmail, verifyUserEmail } from "./controller.js";
 const router = express.Router();
-
+router.get("/verify", async (req, res) => {
+  res.send("<h1>verify</h1>");
+});
 router.post("/verify", async (req, res) => {
   try {
     let { email, otp } = req.body;
