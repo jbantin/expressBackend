@@ -47,9 +47,7 @@ app.post("/login", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
-app.use("/email_verification", (req, res) => {
-  res.send("<h1>huhu verify</h1>");
-});
+
 app.post("/sign_up", async (req, res) => {
   try {
     let { name, email, password } = req.body;
@@ -68,16 +66,15 @@ app.post("/sign_up", async (req, res) => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-  app.use("/forgot_password", ForgotPasswordRoutes);
-  app.use("/otp", OTPRoutes);
-
-  // app.use("/email_verification", emailVerificationRoutes);
 });
 
 // app.use("*", (_, res) => {
 //   res.send("<h1>Not found!</h1>");
 // });
+app.use("/forgot_password", ForgotPasswordRoutes);
+app.use("/otp", OTPRoutes);
 
+app.use("/email_verification", emailVerificationRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
