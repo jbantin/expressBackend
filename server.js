@@ -66,7 +66,10 @@ app.post("/sign_up", async (req, res) => {
   }
   app.use("/forgot_password", ForgotPasswordRoutes);
   app.use("/otp", OTPRoutes);
-  app.use("/email_verification", emailVerificationRoutes);
+  app.use("/email_verification", (req, res) => {
+    res.send("<h1>huhu verify</h1>");
+  });
+  // app.use("/email_verification", emailVerificationRoutes);
 });
 
 // app.use("*", (_, res) => {
