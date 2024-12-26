@@ -17,6 +17,9 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+app.use("/email_verification", (req, res) => {
+  res.send("<h1>huhu verify</h1>");
+});
 app.get("/greeting", (req, res) => {
   res.send("oi koile");
 });
@@ -66,9 +69,7 @@ app.post("/sign_up", async (req, res) => {
   }
   app.use("/forgot_password", ForgotPasswordRoutes);
   app.use("/otp", OTPRoutes);
-  app.use("/email_verification", (req, res) => {
-    res.send("<h1>huhu verify</h1>");
-  });
+
   // app.use("/email_verification", emailVerificationRoutes);
 });
 
