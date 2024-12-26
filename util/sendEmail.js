@@ -1,9 +1,16 @@
 import nodemailer from "nodemailer";
 const { AUTH_EMAIL, AUTH_PASS } = process.env;
-let transporter = nodemailer.createTransport({
-  host: "live.smtp.mailtrap.io",
+
+const transporter = nodemailer.createTransport({
+  host: "mail.gmx.com",
+  port: 587,
+  tls: {
+    ciphers: "SSLv3",
+    rejectUnauthorized: false,
+  },
+  debug: true,
   auth: {
-    user: "smtp@mailtrap.io",
+    user: AUTH_EMAIL,
     pass: AUTH_PASS,
   },
 });
