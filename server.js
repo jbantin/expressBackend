@@ -38,7 +38,7 @@ app.post("/login", async (req, res) => {
     email = email.trim();
     password = password.trim();
 
-    if (!email && password) {
+    if (!(email && password)) {
       throw Error("Empty credentials supplied!");
     }
     const authenticatedUser = await authenticateUser({ email, password });

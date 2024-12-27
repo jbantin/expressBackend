@@ -9,7 +9,7 @@ const authenticateUser = async (data) => {
     const fetchedUser = await User.findOne({ email });
 
     if (!fetchedUser) {
-      throw Error("Invalid credentials entered!");
+      throw Error("Email not found!");
     }
     if (!fetchedUser.verified) {
       throw Error("Email hasn't been verified yet.Check your inbox.");
