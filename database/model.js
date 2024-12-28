@@ -5,6 +5,8 @@ const UserSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   token: String,
+  count: { type: Number, default: 1 },
+  data: [Array],
   verified: { type: Boolean, default: false },
 });
 

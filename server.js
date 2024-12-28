@@ -42,6 +42,7 @@ app.post("/login", async (req, res) => {
       throw Error("Empty credentials supplied!");
     }
     const authenticatedUser = await authenticateUser({ email, password });
+    authenticatedUser.count += 1;
     res.status(200).json(authenticatedUser);
   } catch (error) {
     res.status(400).send(error.message);
