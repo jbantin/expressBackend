@@ -22,7 +22,10 @@ const authenticateUser = async (data) => {
     //create token
     const tokenData = { userId: fetchedUser._id, email };
     const token = await createToken(tokenData);
+    fetchedUser.count = fetchedUser.count + 1;
+    await fetchedUser.save();
     fetchedUser.token = token;
+
     return fetchedUser;
   } catch (error) {
     throw error;
