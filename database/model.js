@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   password: String,
   token: String,
   count: { type: Number, default: 1 },
-  data: [Array],
+  data: Array,
   verified: { type: Boolean, default: false },
 });
 

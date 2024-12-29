@@ -2,6 +2,7 @@ import express from "express";
 import Gemini from "./gemini.js";
 import cors from "cors";
 import "./database/db.js";
+import { User } from "./database/model.js";
 import { createNewUser, authenticateUser } from "./database/controller.js";
 import { verifyToken } from "./middleware/auth.js";
 import OTPRoutes from "./otp/routes.js";
@@ -18,13 +19,28 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/greeting", (req, res) => {
-  res.send("oi koile");
-});
 app.post("/prompt", verifyToken, (req, res) => {
   Gemini(req.body.prompt).then((response) => {
     res.send(response);
   });
+});
+// app.post("/get_data", verifyToken, async (req, res) => {
+//   try {
+//     const fetchedUser = await User.findOne({ email: req.currentUser.email });
+//     res.status(200).send(fetchedUser.data);
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// });
+app.post("/update_data", verifyToken, async (req, res) => {
+  try {
+    const fetchedUser = await User.findOne({ email: req.currentUser.email });
+    fetchedUser.data = req.body.data;
+    fetchedUser.save();
+    res.status(200).send(fetchedUser);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
 });
 
 app.get("/private", verifyToken, (req, res) => {
