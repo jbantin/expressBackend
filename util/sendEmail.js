@@ -9,13 +9,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// transporter.verify((error, success) => {
-//   if (error) {
-//     console.error("Connection test failed:", error);
-//   } else {
-//     console.log("Connection test successful! Server is ready to send emails.");
-//   }
-// });
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Connection test failed:", error);
+  } else {
+    console.log("Connection test successful! Server is ready to send emails.");
+  }
+});
 
 const sendEmail = async (mailOptions) => {
   console.log("huhu try to send email");
