@@ -2,22 +2,20 @@ import nodemailer from "nodemailer";
 const { AUTH_EMAIL, AUTH_PASS } = process.env;
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.web.de", // web.de SMTP server
-  port: 465, // Port for SSL
-  secure: true, // Use SSL
+  service: "gmail",
   auth: {
-    user: AUTH_EMAIL, // Your web.de email address
-    pass: AUTH_PASS, // Your web.de email password
+    user: process.env.GMAIL_USER, // Deine Gmail-Adresse
+    pass: process.env.PASS, // Dein App-Passwort oder dein Gmail-Passwort
   },
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Connection test failed:", error);
-  } else {
-    console.log("Connection test successful! Server is ready to send emails.");
-  }
-});
+// transporter.verify((error, success) => {
+//   if (error) {
+//     console.error("Connection test failed:", error);
+//   } else {
+//     console.log("Connection test successful! Server is ready to send emails.");
+//   }
+// });
 
 const sendEmail = async (mailOptions) => {
   console.log("huhu try to send email");
